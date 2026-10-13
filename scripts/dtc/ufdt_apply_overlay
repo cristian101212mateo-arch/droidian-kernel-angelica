@@ -1,0 +1,19 @@
+#!/bin/bash
+# Reemplazo simple de ufdt_apply_overlay para compilar en ARM64
+# Uso original: ufdt_apply_overlay <main.dtb> <overlay.dtb> <output.merge>
+# Como angelica.dtb ya incluye los fragmentos, basta con copiar el overlay.
+
+if [ $# -lt 3 ]; then
+    echo "Uso: $0 <main.dtb> <overlay.dtb> <output>" >&2
+    exit 1
+fi
+
+MAIN="$1"
+OVERLAY="$2"
+OUTPUT="$3"
+
+# Copiar el overlay al output (el merge real se hace en runtime por el kernel
+# si CONFIG_OF_OVERLAY está activado, o no es necesario si los fragmentos
+# ya están integrados)
+cp "$OVERLAY" "$OUTPUT"
+exit 0

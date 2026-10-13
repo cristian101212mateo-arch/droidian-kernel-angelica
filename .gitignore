@@ -1,0 +1,79 @@
+# === BUILD ARTIFACTS ===
+*.o
+*.o.d
+*.ko
+*.mod
+*.mod.c
+.*.cmd
+.*.o.d
+*.tmp
+.tmp_*
+.deps
+modules.order
+modules.builtin
+Module.symvers
+built-in.a
+built-in.o
+
+# === CONFIG GENERADA ===
+.config
+.config.old
+.depend
+include/generated/
+include/config/
+arch/*/include/generated/
+
+# === KERNEL OUTPUT ===
+vmlinux
+vmlinux.o
+System.map
+Image
+Image.gz
+Image.gz-dtb
+
+# === DTS GENERADOS ===
+arch/arm64/boot/dts/angelica/
+*.dtb
+*.dtb.merge
+*.dtbo
+dtboimg.cfg
+dtbimg.cfg
+
+# === LOGS Y BACKUPS ===
+build.log
+*.bak
+*.old/
+*.x86_64
+*.kernel.bak
+*.pem
+*.der
+*.crt
+
+# === DIRECTORIOS GRANDES ===
+Documentation/
+tools/
+samples/
+firmware/
+
+# === ARQUITECTURAS NO USADAS ===
+
+# === DTS DE OTRAS PLACAS (dentro de arm64) ===
+arch/arm64/boot/dts/amlogic/
+arch/arm64/boot/dts/apm/
+arch/arm64/boot/dts/broadcom/
+arch/arm64/boot/dts/cavium/
+arch/arm64/boot/dts/exynos/
+arch/arm64/boot/dts/freescale/
+arch/arm64/boot/dts/hisilicon/
+arch/arm64/boot/dts/lg/
+arch/arm64/boot/dts/marvell/
+arch/arm64/boot/dts/nvidia/
+arch/arm64/boot/dts/qcom/
+arch/arm64/boot/dts/renesas/
+arch/arm64/boot/dts/rockchip/
+arch/arm64/boot/dts/socionext/
+arch/arm64/boot/dts/sprd/
+arch/arm64/boot/dts/xilinx/
+arch/arm64/boot/dts/zte/
+arch/arm64/boot/dts/altera/
+arch/arm64/boot/dts/amd/

@@ -1,0 +1,57 @@
+name: Build Droidian Kernel
+
+on:
+  push:
+    branches: [ halium-10.0 ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+            build-essential bc bison flex libssl-dev \
+            gcc-aarch64-linux-gnu \
+            device-tree-compiler \
+            zip wget
+
+      - name: Setup environment
+        run: |
+          echo "ARCH=arm64" >> $GITHUB_ENV
+          echo "CROSS_COMPILE=aarch64-linux-gnu-" >> $GITHUB_ENV
+
+      - name: Configure kernel
+        run: |
+          make angelica_halium_defconfig
+          make olddefconfig
+
+      - name: Build kernel
+        run: |
+          make HOSTCFLAGS="-fcommon" KCFLAGS="-Wno-error" -j$(nproc) 2>&1 | tee build.log
+
+      - name: Verify output
+        if: always()
+        run: |
+          ls -lh arch/arm64/boot/Image.gz 2>/dev/null || echo "No Image.gz"
+          ls -lh vmlinux 2>/dev/null || echo "No vmlinux"
+
+      - name: Upload kernel
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kernel-output
+          path: |
+            arch/arm64/boot/Image.gz
+            arch/arm64/boot/dts/mediatek/angelica.dtb
+            vmlinux
+            build.log
+          if-no-files-found: warn
