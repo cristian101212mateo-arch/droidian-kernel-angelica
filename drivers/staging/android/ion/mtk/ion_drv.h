@@ -14,6 +14,10 @@
 #ifndef __ION_DRV_H__
 #define __ION_DRV_H__
 #include <linux/version.h>
+#include "../../uapi/ion.h"
+#include "../../ion.h"
+#include "../../uapi/ion.h"
+#include "../../ion.h"
 
 #include <ion.h>
 

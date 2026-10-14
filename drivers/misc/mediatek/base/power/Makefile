@@ -53,7 +53,7 @@ endif
 obj-$(CONFIG_MACH_MT3967) += ppm_v3/
 obj-$(CONFIG_MACH_MT6761) += ppm_v3/
 obj-$(CONFIG_MACH_MT6758) += ppm_v3/
-obj-$(CONFIG_MACH_MT6765) += ppm_v3/
+# obj-$(CONFIG_MACH_MT6765) += ppm_v3/  # DESACTIVADO - headers incompatibles
 obj-$(CONFIG_MACH_MT6779) += ppm_v3/
 obj-$(CONFIG_MACH_MT6757) += vcorefs_v1/
 obj-$(CONFIG_MACH_MT6763) += vcorefs_v3/
@@ -92,11 +92,11 @@ obj-$(CONFIG_MACH_MT6761) += hps_v3/
 obj-$(CONFIG_MACH_MT6779) += cpuhotplug/
 obj-$(CONFIG_MACH_MT3967) += cpuhotplug/
 obj-$(CONFIG_MACH_MT6758) += cpuidle_v3/
-obj-$(CONFIG_MACH_MT6765) += cpuidle_v3/
+# obj-$(CONFIG_MACH_MT6765) += cpuidle_v3/  # DESACTIVADO
 obj-$(CONFIG_MACH_MT6761) += cpuidle_v3/
 obj-$(CONFIG_MACH_MT3967) += cpuidle_v3/
 obj-$(CONFIG_MACH_MT6779) += cpuidle_v3/
-obj-$(CONFIG_MACH_MT6757) += ppm_v2/
+# obj-$(CONFIG_MACH_MT6757) += ppm_v2/  # DESACTIVADO
 obj-$(CONFIG_MACH_MT6763) += ppm_v3/
 obj-$(CONFIG_MACH_MT6757) += spm_v2/
 obj-$(CONFIG_MACH_MT6763) += spm_v4/
@@ -119,13 +119,6 @@ obj-$(CONFIG_MACH_MT6765) += mcdi/
 obj-$(CONFIG_MACH_MT6761) += mcdi/
 obj-$(CONFIG_MACH_MT6779) += mcdi/
 obj-$(CONFIG_MACH_MT3967) += mcdi/
-ifeq ($(CONFIG_MTK_CM_MGR), y)
-obj-$(CONFIG_MACH_MT6765) += cm_mgr_v1/
-obj-$(CONFIG_MACH_MT6761) += cm_mgr_v1/
-obj-$(CONFIG_MACH_MT6763) += cm_mgr_v0p5/
-obj-$(CONFIG_MACH_MT3967) += cm_mgr_v1/
-obj-$(CONFIG_MACH_MT6779) += cm_mgr_v1/
-endif
 obj-$(CONFIG_MACH_MT6779) += srclken_rc_v1/
 obj-$(CONFIG_MTK_SWPM) += swpm_v1/
 obj-$(CONFIG_MTK_QOS_FRAMEWORK) += qos/

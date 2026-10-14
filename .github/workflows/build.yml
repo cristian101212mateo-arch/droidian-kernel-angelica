@@ -1,8 +1,8 @@
-name: Build Droidian Kernel
+name: Build Droidian Kernel 4.9
 
 on:
   push:
-    branches: [ halium-10.0 ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -20,38 +20,43 @@ jobs:
           sudo apt update
           sudo apt install -y \
             build-essential bc bison flex libssl-dev \
-            gcc-aarch64-linux-gnu \
-            device-tree-compiler \
-            zip wget
-
-      - name: Setup environment
-        run: |
-          echo "ARCH=arm64" >> $GITHUB_ENV
-          echo "CROSS_COMPILE=aarch64-linux-gnu-" >> $GITHUB_ENV
+            gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu \
+            device-tree-compiler zip
 
       - name: Configure kernel
         run: |
-          make angelica_halium_defconfig
+          export ARCH=arm64
+          export CROSS_COMPILE=aarch64-linux-gnu-
+          make angelica_halium_defconfig 2>/dev/null || make blossom_defconfig 2>/dev/null || make defconfig
           make olddefconfig
 
       - name: Build kernel
         run: |
+          export ARCH=arm64
+          export CROSS_COMPILE=aarch64-linux-gnu-
           make HOSTCFLAGS="-fcommon" KCFLAGS="-Wno-error" -j$(nproc) 2>&1 | tee build.log
+
+      - name: Build DTBs
+        if: always()
+        run: |
+          export ARCH=arm64
+          export CROSS_COMPILE=aarch64-linux-gnu-
+          make HOSTCFLAGS="-fcommon" KCFLAGS="-Wno-error" dtbs 2>&1 | tee -a build.log
 
       - name: Verify output
         if: always()
         run: |
           ls -lh arch/arm64/boot/Image.gz 2>/dev/null || echo "No Image.gz"
           ls -lh vmlinux 2>/dev/null || echo "No vmlinux"
+          find arch/arm64/boot/dts -name "*.dtb" 2>/dev/null | head -10
 
-      - name: Upload kernel
+      - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: kernel-output
           path: |
             arch/arm64/boot/Image.gz
-            arch/arm64/boot/dts/mediatek/angelica.dtb
-            vmlinux
+            arch/arm64/boot/dts/**/*.dtb
             build.log
           if-no-files-found: warn
